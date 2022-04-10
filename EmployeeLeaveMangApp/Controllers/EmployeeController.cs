@@ -85,24 +85,7 @@ namespace EmployeeLeaveMangApp.Controllers
         #endregion
 
         #region "Search Employee List"
-        [HttpGet(nameof(GetAllEmployee))]
-        public ActionResult GetAllEmployee()
-        {
-            try
-            {
-                var EmployeeClass = EmployeeService.GetAllEmployee();
-                if (EmployeeClass != null)
-                {
-                    return Ok(EmployeeClass);
-                }
-            }
-            catch (Exception e)
-            {
-                _logger.LogError("Exception Occured", e.InnerException);
-            }
-
-            return BadRequest("Not found");
-        }
+        
 
         #endregion
 

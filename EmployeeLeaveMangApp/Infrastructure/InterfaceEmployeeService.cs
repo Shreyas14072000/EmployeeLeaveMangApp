@@ -25,5 +25,6 @@ namespace EmployeeLeaveMangApp.Infrastructure
 
 
             void DeletePLeave(int empId);
+        
         }
 }
