@@ -1,0 +1,33 @@
+﻿@model EmployeeLeaveMangApp.Models.ApplyPlannedLeave
+
+@{
+    ViewData["Title"] = "Apply For Planned Leave";
+}
+<form method="post" asp-controller="Employee" asp-action="CancelPlannedLeave">
+    <div>
+        <div class="row">
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="EmpId"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="EmpId" class="form-control" />
+                        <span asp-validation-for="EmpId" class="text-danger"></span>
+                    </div>
+                </div>
+                
+
+
+
+                <div class="form-group row">
+                    @*<div class="col-6 offset-4 row">*@
+                    <div class="col-4 offset-4">
+                        <input type="submit" class="btn btn-info w-100" value="Delete" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

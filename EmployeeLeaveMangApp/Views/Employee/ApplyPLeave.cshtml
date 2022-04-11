@@ -1,0 +1,61 @@
+﻿@model EmployeeLeaveMangApp.Models.ApplyPlannedLeave
+
+@{
+    ViewData["Title"] = "Apply For Planned Leave";
+}
+
+<form method="post" asp-controller="Employee" asp-action="ApplyPLeave">
+    <div>
+        <div class="row">
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="EmpId"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="EmpId" class="form-control" />
+                        <span asp-validation-for="EmpId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="EmpName"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="EmpName" class="form-control" />
+                        <span asp-validation-for="EmpName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="LeaveDuration"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="LeaveDuration" class="form-control" />
+                        <span asp-validation-for="LeaveDuration" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="LeaveReason"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="LeaveReason" class="form-control" />
+                        <span asp-validation-for="LeaveReason" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group row">
+                    @*<div class="col-6 offset-4 row">*@
+                    <div class="col-4 offset-4">
+                        <input type="submit" class="btn btn-info w-100" value="Apply" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+

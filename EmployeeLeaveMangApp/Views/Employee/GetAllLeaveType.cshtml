@@ -1,0 +1,50 @@
+﻿@model IEnumerable<EmployeeLeaveMangApp.Models.LeaveDetail>
+
+    @{
+    ViewData["Title"] = "GetAllLeaveType";
+    }
+
+
+    <div>
+        <h2 class="text-primary">All Leave Type List</h2>
+    </div>
+
+    <div class="container p-3">
+        <
+
+        <div>
+            <a class="nav-link text-dark btn-primary font-weight-bold" style="margin: 10px; background-color: #00b9ff;float: right" asp-controller="Employee" asp- asp-action="GetAllLeaveType">Get All Leave type</a>
+        </div>
+        @if (Model.Count() > 0)
+        {
+        <table class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        LeaveId
+                    </th>
+                    <th>
+                        LeaveDuration
+                    </th>
+                    <th>
+                        LeaveType
+                    </th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var detail in Model)
+                {
+                <tr>
+                    
+                    <td>@detail.LeaveId</td>
+                    <td>@detail.LeaveDuration</td>
+                    <td>@detail.LeaveType</td>
+
+
+                </tr>
+                }
+            </tbody>
+        </table>
+        }
+    </div>

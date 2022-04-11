@@ -22,6 +22,10 @@ namespace EmployeeLeaveMangApp.Controllers
             this.EmployeeService = EmployeeService;
         }
         #endregion
+        public IActionResult Employee()
+        {
+            return View();
+        }
 
 
 
@@ -46,24 +50,7 @@ namespace EmployeeLeaveMangApp.Controllers
         }
         #endregion
 
-        #region "Add Employee"
-        [HttpPost(nameof(AddEmployee))]
-        public ActionResult AddEmployee(EmployeeClass EmployeeClass)
-        {
-            try
-            {
-                EmployeeService.InsertEmployee(EmployeeClass);
-
-                return Ok("Employee added");
-            }
-            catch (Exception e)
-            {
-                _logger.LogError("Exception Occured", e.InnerException);
-            }
-            return BadRequest("Not found");
-
-        }
-        #endregion
+        
 
         #region "Update Employee Data"
         [HttpPut(nameof(UpdateEmployee))]
@@ -90,7 +77,7 @@ namespace EmployeeLeaveMangApp.Controllers
         #endregion
 
         #region "Leave Type"
-        [HttpGet(nameof(GetAllLeaveType))]
+       
         public ActionResult GetAllLeaveType()
         {
             try
@@ -98,7 +85,7 @@ namespace EmployeeLeaveMangApp.Controllers
                 var LeaveDetail = EmployeeService.GetAllLeaveType();
                 if (LeaveDetail != null)
                 {
-                    return Ok(LeaveDetail);
+                    return View(LeaveDetail);
                 }
             }
 
@@ -110,8 +97,13 @@ namespace EmployeeLeaveMangApp.Controllers
         }
         #endregion
         #region "Apply Planned Leaves"
-        [HttpPost(nameof(ApplyPLeave))]
-        public ActionResult ApplyPLeave(ApplyPlannedLeave applyPlannedLeave)
+        public IActionResult ApplyPLeave()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ApplyPLeave(ApplyPlannedLeave applyPlannedLeave)
         {
             try
             {
@@ -129,8 +121,12 @@ namespace EmployeeLeaveMangApp.Controllers
         #endregion
 
         #region "Cancel Planned Leaves"
-        [HttpPut(nameof(CancelPlannedLeave))]
-        public ActionResult CancelPlannedLeave(int EmpId)
+        public IActionResult CancelPlannedLeave()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult CancelPlannedLeave(int EmpId)
         {
             try
             {

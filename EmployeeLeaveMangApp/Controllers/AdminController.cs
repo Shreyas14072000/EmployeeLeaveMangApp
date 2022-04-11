@@ -26,9 +26,13 @@ namespace EmployeeLeaveMangApp.Controllers
         {
             return View();
         }
+        public IActionResult Admin()
+        {
+            return View();
+        }
 
 
-        [HttpGet(nameof(GetAllEmployee))]
+      
         public ActionResult GetAllEmployee()
         {
             try
@@ -46,7 +50,29 @@ namespace EmployeeLeaveMangApp.Controllers
 
             return BadRequest("Not found");
         }
+        public IActionResult AddEmployee()
+        {
+            return View();
+        }
+        #region "Add Employee"
+        [HttpPost]
+        public IActionResult AddEmployee(EmployeeClass EmployeeClass)
+        {
+            try
+            {
+                EmployeeService.InsertEmployee(EmployeeClass);
 
-      
+                return Ok("Employee Added");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Exception Occured", e.InnerException);
+            }
+            return BadRequest("Not found");
+
+        }
+        #endregion
+
+
     }
 }
