@@ -1,0 +1,78 @@
+﻿
+@model EmployeeLeaveMangApp.Models.EmployeeClass
+
+@{
+    ViewData["Title"] = "Approve Leave";
+}
+
+<form method="post" asp-controller="Admin" asp-action="UpdateEmployee" style="background-color:azure">
+    <div>
+        <div class="row">
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="EmpId"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="EmpId" class="form-control" />
+                        <span asp-validation-for="EmpId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="EmpName"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="EmpName" class="form-control"/>
+                        <span asp-validation-for="EmpName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="EmpGender"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="EmpGender" class="form-control" />
+                        <span asp-validation-for="EmpGender" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="LeaveStatus"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="LeaveStatus" class="form-control" />
+                        <span asp-validation-for="LeaveStatus" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="LeaveId"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="LeaveId" class="form-control"  />
+                        <span asp-validation-for="LeaveId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="LeaveType"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="LeaveType" class="form-control" />
+                        <span asp-validation-for="LeaveType" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    @*<div class="col-6 offset-4 row">*@
+                    <div class="col-4 offset-4">
+                        <input type="submit" class="btn btn-info w-100" value="Approve" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

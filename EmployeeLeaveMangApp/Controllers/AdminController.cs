@@ -72,7 +72,26 @@ namespace EmployeeLeaveMangApp.Controllers
 
         }
         #endregion
+        public IActionResult UpdateEmployee()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult UpdateEmployee(EmployeeClass employee)
+        {
+            try
+            {
+                EmployeeService.UpdateEmployee(employee);
 
+                return Ok("Leave Approved");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Exception Occured", e.InnerException);
+            }
+            return BadRequest("Not found");
+
+        }
 
     }
 }

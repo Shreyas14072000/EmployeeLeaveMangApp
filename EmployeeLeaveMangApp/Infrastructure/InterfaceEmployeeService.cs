@@ -15,8 +15,10 @@ namespace EmployeeLeaveMangApp.Infrastructure
 
             IList<LeaveDetail> GetAllLeaveType();
 
+            IList<ApplyPlannedLeave> GetApplication();
 
-            EmployeeClass GetEmployeeById(int EmpId);
+
+        EmployeeClass GetEmployeeById(int EmpId);
 
             void InsertEmployee(EmployeeClass employee);
             void UpdateEmployee(EmployeeClass employee);

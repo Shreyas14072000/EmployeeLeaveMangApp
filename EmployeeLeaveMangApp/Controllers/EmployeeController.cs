@@ -53,22 +53,7 @@ namespace EmployeeLeaveMangApp.Controllers
         
 
         #region "Update Employee Data"
-        [HttpPut(nameof(UpdateEmployee))]
-        public ActionResult UpdateEmployee(EmployeeClass employee)
-        {
-            try
-            {
-                EmployeeService.UpdateEmployee(employee);
-
-                return Ok("Employee Updated");
-            }
-            catch (Exception e)
-            {
-                _logger.LogError("Exception Occured", e.InnerException);
-            }
-            return BadRequest("Not found");
-
-        }
+        
         #endregion
 
         #region "Search Employee List"
@@ -142,6 +127,25 @@ namespace EmployeeLeaveMangApp.Controllers
             return BadRequest("Not found");
         }
         #endregion
+        public ActionResult GetApplication()
+        {
+            try
+            {
+                var LeaveApp = EmployeeService.GetApplication();
+                if (LeaveApp != null)
+                {
+                    return View(LeaveApp);
+                }
+            }
+
+            catch (Exception e)
+            {
+                _logger.LogError("Exception Occured", e.InnerException);
+            }
+            return BadRequest("Not found");
+        }
+
     }
+
 }
 

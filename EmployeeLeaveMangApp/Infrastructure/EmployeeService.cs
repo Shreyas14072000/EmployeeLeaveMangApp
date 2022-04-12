@@ -92,7 +92,10 @@ namespace EmployeeLeaveMangApp.Infrastructure
             }
         #endregion
 
-        
+        public IList<ApplyPlannedLeave> GetApplication()
+        {
+            return ApplicationEmployeeContext.Set<ApplyPlannedLeave>().ToList();
+        }
 
 
 
