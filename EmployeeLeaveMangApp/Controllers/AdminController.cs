@@ -3,6 +3,7 @@ using EmployeeLeaveMangApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Threading.Tasks;
 
 namespace EmployeeLeaveMangApp.Controllers
 {
@@ -10,6 +11,7 @@ namespace EmployeeLeaveMangApp.Controllers
     {
         private readonly InterfaceEmployeeService EmployeeService;
         private readonly ILogger<AdminController> _logger;
+        private readonly SendServiceBusMessage _sendServiceBusMessage;
 
 
         #region "Constructor init"
@@ -77,11 +79,19 @@ namespace EmployeeLeaveMangApp.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult UpdateEmployee(EmployeeClass employee)
+        public async Task<IActionResult> UpdateEmployee(EmployeeClass employee)
         {
             try
             {
                 EmployeeService.UpdateEmployee(employee);
+                await _sendServiceBusMessage.sendServiceBusMessage(new ServiceBusMessageData
+                {
+                    EmpId = employee.EmpId,
+                    EmpName = employee.EmpName,
+                    EmpGender = employee.EmpGender,
+                    LeaveStatus = employee.LeaveStatus
+
+                });
 
                 return Ok("Leave Approved");
             }

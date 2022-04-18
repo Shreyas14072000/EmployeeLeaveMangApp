@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using EmployeeLeaveMangApp.Models;
 using EmployeeLeaveMangApp.Infrastructure;
+using System.Threading.Tasks;
 
 namespace EmployeeLeaveMangApp.Controllers
 {
@@ -12,6 +13,7 @@ namespace EmployeeLeaveMangApp.Controllers
     {
         private readonly InterfaceEmployeeService EmployeeService;
         private readonly ILogger<EmployeeController> _logger;
+        private readonly SendServiceBusMessage _sendServiceBusMessage;
 
 
         #region "Constructor init"
@@ -29,26 +31,30 @@ namespace EmployeeLeaveMangApp.Controllers
 
 
 
-        #region "Search Employee Leave Taken"
-        [HttpGet(nameof(GetEmployeeById))]
-        public ActionResult GetEmployeeById(int EmpId)
-        {
-            try
-            {
-                var EmployeeClass = EmployeeService.GetEmployeeById(EmpId);
-                if (EmployeeClass != null)
-                {
-                    return Ok(EmployeeClass);
-                }
-            }
-            catch (Exception e)
-            {
-                _logger.LogError("Exception Occured", e.InnerException);
-            }
+        ////#region "Search Employee Leave Taken"
+        ////public IActionResult GetEmployeeById()
+        ////{
+        ////    return View();
+        ////}
+        ////[HttpPost]
+        ////public IActionResult GetEmployeeById(int EmpId)
+        ////{
+        ////    try
+        ////    {
+        ////        var EmployeeClass = EmployeeService.GetEmployeeById(EmpId);
+        ////        if (EmployeeClass != null)
+        ////        {
+        ////            return Ok(EmployeeClass);
+        ////        }
+        ////    }
+        ////    catch (Exception e)
+        ////    {
+        ////        _logger.LogError("Exception Occured", e.InnerException);
+        ////    }
 
-            return BadRequest("Not found");
-        }
-        #endregion
+        ////    return BadRequest("Not found");
+        ////}
+        //#endregion
 
         
 
@@ -82,17 +88,27 @@ namespace EmployeeLeaveMangApp.Controllers
         }
         #endregion
         #region "Apply Planned Leaves"
-        public IActionResult ApplyPLeave()
+        public async Task<IActionResult> ApplyPLeave()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult ApplyPLeave(ApplyPlannedLeave applyPlannedLeave)
+        public async Task<IActionResult> ApplyPLeave(ApplyPlannedLeave applyPlannedLeave)
         {
             try
             {
                 EmployeeService.ApplyPL(applyPlannedLeave);
+                await _sendServiceBusMessage.sendServiceBusMessage(new ServiceBusMessageData
+                {
+
+                    EmpId = applyPlannedLeave.EmpId,
+                    EmpName = applyPlannedLeave.EmpName,
+                    LeaveDuration = applyPlannedLeave.LeaveDuration,
+                    LeaveReason = applyPlannedLeave.LeaveReason
+
+
+                });
 
                 return Ok("Leave Applied Successully");
             }
@@ -106,16 +122,21 @@ namespace EmployeeLeaveMangApp.Controllers
         #endregion
 
         #region "Cancel Planned Leaves"
-        public IActionResult CancelPlannedLeave()
+        public async Task<IActionResult> CancelPlannedLeave()
         {
             return View();
         }
         [HttpPost]
-        public IActionResult CancelPlannedLeave(int EmpId)
+        public async Task<IActionResult> CancelPlannedLeave(int EmpId)
         {
             try
             {
                 EmployeeService.DeletePLeave(EmpId);
+                await _sendServiceBusMessage.sendServiceBusMessage(new ServiceBusMessageData
+                {
+                    EmpId = EmpId
+
+                }) ;
 
                 return Ok("Leave Cancelled");
 
