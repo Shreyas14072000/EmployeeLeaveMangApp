@@ -15,11 +15,12 @@ namespace EmployeeLeaveMangApp.Controllers
 
 
         #region "Constructor init"
-        public AdminController(InterfaceEmployeeService EmployeeService, ILogger<AdminController>  logger) 
+        public AdminController(InterfaceEmployeeService employeeService, ILogger<AdminController>  logger , SendServiceBusMessage sendServiceBusMessage) 
         {
             _logger = logger;
             _logger.LogInformation("Employee Added");
-            this.EmployeeService = EmployeeService;
+            EmployeeService = employeeService;
+            _sendServiceBusMessage = sendServiceBusMessage;
 
         }
         #endregion

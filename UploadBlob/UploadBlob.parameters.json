@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "logicAppName": {
+      "value": "UploadBlob"
+    },
+
+    
+    "azureblob_1_accountName": {
+      "value": "uploadblobstorage"
+    },
+    "azureblob_1_authType": {
+      "value": "basic"
+    },
+    "azureblob_1_privacySetting": {
+      "value": "Public"
+    }
+
+
+  }
+}

@@ -141,23 +141,31 @@
                 "host": {
                   "connection": {
                     "name": "@parameters('$connections')['outlook']['connectionId']"
+                  },
+                  "Send_an_email_(V2)": {
+                    "type": "ApiConnection",
+                    "inputs": {
+                      "host": {
+                        "connection": {
+                          "name": "@parameters('$connections')['outlook']['connectionId']"
+                        }
+
+                      },
+                      "method": "post",
+                      "body": {
+                        "To": "aaanupam.singh007@gmail.com",
+                        "Subject": "EmployeeManagementSystem Email Alert",
+                        "Body": "<p>@{body('Parse_JSON_Incoming_Message')}</p>"
+                      },
+                      "path": "/v2/Mail"
+                    },
+                    "runAfter": {
+                      "Parse_JSON_Incoming_Message": [
+                        "Succeeded"
+                      ]
+                    }
                   }
                 },
-                "method": "post",
-                "body": {
-                  "To": "aaanupam.singh007@gmail.com",
-                  "Subject": "EmployeeManagementSystem Email Alert",
-                  "Body": "<p>@{body('Parse_JSON_Incoming_Message')}</p>"
-                },
-                "path": "/v2/Mail"
-              },
-              "runAfter": {
-                "Parse_JSON_Incoming_Message": [
-                  "Succeeded"
-                ]
-              }
-            }
-          },
           "parameters": {
             "$connections": {
               "defaultValue": {},
