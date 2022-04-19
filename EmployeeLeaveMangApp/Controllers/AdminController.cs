@@ -52,17 +52,25 @@ namespace EmployeeLeaveMangApp.Controllers
 
             return BadRequest("Not found");
         }
-        public IActionResult AddEmployee()
+        public async  Task<IActionResult> AddEmployee()
         {
+
             return View();
         }
         #region "Add Employee"
         [HttpPost]
-        public IActionResult AddEmployee(EmployeeClass EmployeeClass)
+        public async Task<IActionResult> AddEmployee(EmployeeClass employeeClass)
         {
             try
             {
-                EmployeeService.InsertEmployee(EmployeeClass);
+                EmployeeService.InsertEmployee(employeeClass);
+                await _sendServiceBusMessage.sendServiceBusMessage(new ServiceBusMessageData
+                {
+                    EmpId = employeeClass.EmpId,
+                    EmpName = employeeClass.EmpName,
+                    EmpGender = employeeClass.EmpGender
+                });
+
 
                 return Ok("Employee Added");
             }

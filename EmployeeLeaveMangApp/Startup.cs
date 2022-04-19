@@ -27,7 +27,7 @@ namespace EmployeeLeaveMangApp
         {
             services.AddControllersWithViews();
             services.AddScoped<InterfaceEmployeeService, EmployeeService>();
-
+            services.AddScoped<SendServiceBusMessage>();
             services.AddDbContext<ApplicationEmployeeContext>(x => x.UseSqlServer(Configuration.GetConnectionString("ConStr")));
         }
 

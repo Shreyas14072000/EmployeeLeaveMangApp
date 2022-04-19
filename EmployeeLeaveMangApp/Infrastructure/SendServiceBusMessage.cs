@@ -14,16 +14,16 @@ namespace EmployeeLeaveMangApp.Infrastructure
     {
         private readonly ILogger _logger;
 
-        public IConfiguration _configuration;
+        public IConfiguration configuration;
 
         public ServiceBusClient _client;
         public ServiceBusSender _clientSender;
 
-        public SendServiceBusMessage(IConfiguration _configuration, ILogger<SendServiceBusMessage> logger)
+        public SendServiceBusMessage(IConfiguration configuration, ILogger<SendServiceBusMessage> logger)
         {
             _logger = logger;
-            var _serviceBusConnectionString = _configuration["ServiceBusConnectionString"];
-            string queueName = _configuration["serviceBusQueueName"];
+            var _serviceBusConnectionString = configuration["ServiceBusConnectionString"];
+            string queueName = configuration["serviceBusQueueName"];
             _client = new ServiceBusClient(_serviceBusConnectionString);
             _clientSender = _client.CreateSender(queueName);
         }
