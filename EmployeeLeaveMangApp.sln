@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.32106.194
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeLeaveMangApp", "EmployeeLeaveMangApp\EmployeeLeaveMangApp.csproj", "{C6EC40AE-A0EC-4EFE-9279-7A0471E9B81F}"
 EndProject
-Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "SMS.ServiceBus.Queue", "SMS.ServiceBus.Queue\SMS.ServiceBus.Queue.deployproj", "{209B1171-745B-436B-B929-48611FE447DA}"
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "serviceBus.Queue", "serviceBus.Queue\serviceBus.Queue.deployproj", "{55ED21B5-17E6-413E-BFD6-D52D22F3FE2E}"
 EndProject
-Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "UploadBlob", "UploadBlob\UploadBlob.deployproj", "{56B1A42A-BE4C-499D-9342-818FF04A8B1F}"
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "sendEmailAlert-ELMS", "sendEmailAlert-ELMS\sendEmailAlert-ELMS.deployproj", "{612118FF-722D-4423-B11D-C410CDEF9595}"
 EndProject
-Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "SMS.Workflow.SendEmailAlert", "SMS.Workflow.SendEmailAlert\SMS.Workflow.SendEmailAlert.deployproj", "{75A0AFE0-B5A1-43C9-98BC-D5128B18A574}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValidateLogin-ELMS", "ValidateLogin-ELMS\ValidateLogin-ELMS.csproj", "{5DAC59B4-20AC-4B60-98D0-BD8C5D578BE7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,18 +21,18 @@ Global
 		{C6EC40AE-A0EC-4EFE-9279-7A0471E9B81F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6EC40AE-A0EC-4EFE-9279-7A0471E9B81F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6EC40AE-A0EC-4EFE-9279-7A0471E9B81F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{209B1171-745B-436B-B929-48611FE447DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{209B1171-745B-436B-B929-48611FE447DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{209B1171-745B-436B-B929-48611FE447DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{209B1171-745B-436B-B929-48611FE447DA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{56B1A42A-BE4C-499D-9342-818FF04A8B1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{56B1A42A-BE4C-499D-9342-818FF04A8B1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{56B1A42A-BE4C-499D-9342-818FF04A8B1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{56B1A42A-BE4C-499D-9342-818FF04A8B1F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{75A0AFE0-B5A1-43C9-98BC-D5128B18A574}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{75A0AFE0-B5A1-43C9-98BC-D5128B18A574}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{75A0AFE0-B5A1-43C9-98BC-D5128B18A574}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{75A0AFE0-B5A1-43C9-98BC-D5128B18A574}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55ED21B5-17E6-413E-BFD6-D52D22F3FE2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55ED21B5-17E6-413E-BFD6-D52D22F3FE2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55ED21B5-17E6-413E-BFD6-D52D22F3FE2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55ED21B5-17E6-413E-BFD6-D52D22F3FE2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{612118FF-722D-4423-B11D-C410CDEF9595}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{612118FF-722D-4423-B11D-C410CDEF9595}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{612118FF-722D-4423-B11D-C410CDEF9595}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{612118FF-722D-4423-B11D-C410CDEF9595}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DAC59B4-20AC-4B60-98D0-BD8C5D578BE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DAC59B4-20AC-4B60-98D0-BD8C5D578BE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DAC59B4-20AC-4B60-98D0-BD8C5D578BE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DAC59B4-20AC-4B60-98D0-BD8C5D578BE7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

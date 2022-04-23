@@ -1,0 +1,236 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "logicAppName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "metadata": {
+        "description": "Name of the Logic App."
+      }
+    },
+    "logicAppLocation": {
+      "type": "string",
+      "defaultValue": "eastus",
+      "allowedValues": [
+        "[resourceGroup().location]",
+        "eastasia",
+        "southeastasia",
+        "centralus",
+        "eastus",
+        "eastus2",
+        "westus",
+        "northcentralus",
+        "southcentralus",
+        "northeurope",
+        "westeurope",
+        "japanwest",
+        "japaneast",
+        "brazilsouth",
+        "australiaeast",
+        "australiasoutheast",
+        "southindia",
+        "centralindia",
+        "westindia",
+        "canadacentral",
+        "canadaeast",
+        "uksouth",
+        "ukwest",
+        "westcentralus",
+        "westus2",
+        "koreacentral",
+        "koreasouth",
+        "francecentral",
+        "francesouth",
+        "uaecentral",
+        "uaenorth",
+        "southafricanorth",
+        "southafricawest",
+        "switzerlandnorth",
+        "switzerlandwest",
+        "germanynorth",
+        "germanywestcentral",
+        "norwaywest",
+        "norwayeast",
+        "brazilsoutheast",
+        "westus3"
+      ],
+      "metadata": {
+        "description": "Location of the Logic App."
+      }
+    },
+    "servicebus_Connection_Name": {
+      "type": "string",
+      "defaultValue": "servicebus"
+    },
+    "servicebus_Connection_DisplayName": {
+      "type": "string",
+      "defaultValue": "SbConn-RG"
+    },
+    "servicebus_connectionString": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Azure Service Bus Connection String"
+      }
+    },
+    "outlook_Connection_Name": {
+      "type": "string",
+      "defaultValue": "outlook"
+    },
+    "outlook_Connection_DisplayName": {
+      "type": "string",
+      "defaultValue": "Outlook.com"
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "name": "[parameters('logicAppName')]",
+      "type": "Microsoft.Logic/workflows",
+      "location": "[parameters('logicAppLocation')]",
+      "tags": {
+        "displayName": "LogicApp"
+      },
+      "apiVersion": "2016-06-01",
+      "properties": {
+        "definition": {
+          "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+          "actions": {
+            "Parse_JSON_Incoming_Message": {
+              "type": "ParseJson",
+              "inputs": {
+                "content": "@{base64ToString(triggerBody()?['ContentData'])}@{json(decodeBase64(triggerBody()['ContentData']))}",
+                "schema": {}
+              },
+              "runAfter": {}
+            },
+            "Send_an_email__Alert": {
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['outlook']['connectionId']"
+                  }
+                },
+                "method": "post",
+                "body": {
+                  "To": "shreyaskabiraj07@outlook.com,Anupam.19b133002@abes.ac.in",
+                  "Subject": "ELMS-@{body('Parse_JSON_Incoming_Message')?['Action']}",
+                  "Body": "<p>Hi,<br>\n<br>\n@{body('Parse_JSON_Incoming_Message')?['EmpName']} With Employee Id @{body('Parse_JSON_Incoming_Message')?['EmpId']} Has Been@{body('Parse_JSON_Incoming_Message')?['Action']} sucessfully<br>\n<br>\nThanks</p>"
+                },
+                "path": "/v2/Mail"
+              },
+              "runAfter": {
+                "Parse_JSON_Incoming_Message": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Complete_the_message_in_a_queue": {
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['servicebus']['connectionId']"
+                  }
+                },
+                "method": "delete",
+                "path": "/@{encodeURIComponent(encodeURIComponent('sms-sb-receive-queue'))}/messages/complete",
+                "queries": {
+                  "lockToken": "@triggerBody()?['LockToken']",
+                  "queueType": "Main",
+                  "sessionId": ""
+                }
+              },
+              "runAfter": {
+                "Send_an_email__Alert": [
+                  "Succeeded"
+                ]
+              }
+            }
+          },
+          "parameters": {
+            "$connections": {
+              "defaultValue": {},
+              "type": "Object"
+            }
+          },
+          "triggers": {
+            "When_one_or_more_messages_arrive_in_a_queue_(peek-lock)": {
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['servicebus']['connectionId']"
+                  }
+                },
+                "method": "get",
+                "path": "/@{encodeURIComponent(encodeURIComponent('sms-sb-receive-queue'))}/messages/batch/head/peek",
+                "queries": {
+                  "maxMessageCount": 20,
+                  "queueType": "Main"
+                }
+              },
+              "recurrence": {
+                "frequency": "Second",
+                "interval": 30
+              },
+              "splitOn": "@triggerBody()"
+            }
+          },
+          "contentVersion": "1.0.0.0",
+          "outputs": {}
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "servicebus": {
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', parameters('logicAppLocation'), '/managedApis/', 'servicebus')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('servicebus_Connection_Name'))]",
+                "connectionName": "[parameters('servicebus_Connection_Name')]"
+              },
+              "outlook": {
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', parameters('logicAppLocation'), '/managedApis/', 'outlook')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('outlook_Connection_Name'))]",
+                "connectionName": "[parameters('outlook_Connection_Name')]"
+              }
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/connections', parameters('servicebus_Connection_Name'))]",
+        "[resourceId('Microsoft.Web/connections', parameters('outlook_Connection_Name'))]"
+      ]
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2018-07-01-preview",
+      "name": "[parameters('servicebus_Connection_Name')]",
+      "location": "[parameters('logicAppLocation')]",
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', parameters('logicAppLocation'), '/managedApis/', 'servicebus')]"
+        },
+        "displayName": "[parameters('servicebus_Connection_DisplayName')]",
+        "parameterValues": {
+          "connectionString": "[parameters('servicebus_connectionString')]"
+        }
+      }
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2018-07-01-preview",
+      "name": "[parameters('outlook_Connection_Name')]",
+      "location": "[parameters('logicAppLocation')]",
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', parameters('logicAppLocation'), '/managedApis/', 'outlook')]"
+        },
+        "displayName": "[parameters('outlook_Connection_DisplayName')]"
+      }
+    }
+  ],
+  "outputs": {}
+}

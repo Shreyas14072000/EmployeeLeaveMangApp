@@ -25,14 +25,14 @@ namespace EmployeeLeaveMangApp.Infrastructure
             //    ApplicationEmployeeContext = ApplicationEmployeeContext;
             //}
             #region "Method for employee list"
-            public IList<EmployeeClass> GetAllEmployee()
+            public async Task<IList<EmployeeClass>> GetAllEmployee()
             {
                 return ApplicationEmployeeContext.Set<EmployeeClass>().ToList();
             }
             #endregion
 
             #region "Method for Leave Type "
-            public IList<LeaveDetail> GetAllLeaveType()
+            public async Task<IList<LeaveDetail>> GetAllLeaveType()
             {
                 return ApplicationEmployeeContext.Set<LeaveDetail>().ToList();
             }
@@ -92,7 +92,7 @@ namespace EmployeeLeaveMangApp.Infrastructure
             }
         #endregion
 
-        public IList<ApplyPlannedLeave> GetApplication()
+        public async Task<IList<ApplyPlannedLeave>> GetApplication()
         {
             return ApplicationEmployeeContext.Set<ApplyPlannedLeave>().ToList();
         }

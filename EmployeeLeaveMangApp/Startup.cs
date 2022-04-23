@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using StudentManagementSystem.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,7 @@ namespace EmployeeLeaveMangApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddScoped<UploadFile>();
             services.AddScoped<InterfaceEmployeeService, EmployeeService>();
             services.AddScoped<SendServiceBusMessage>();
             services.AddDbContext<ApplicationEmployeeContext>(x => x.UseSqlServer(Configuration.GetConnectionString("ConStr")));

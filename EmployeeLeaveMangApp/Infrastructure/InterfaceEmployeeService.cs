@@ -11,11 +11,11 @@ namespace EmployeeLeaveMangApp.Infrastructure
    
         public interface InterfaceEmployeeService
         {
-            IList<EmployeeClass> GetAllEmployee();
+            Task<IList<EmployeeClass>> GetAllEmployee();
 
-            IList<LeaveDetail> GetAllLeaveType();
+            Task<IList<LeaveDetail>> GetAllLeaveType();
 
-            IList<ApplyPlannedLeave> GetApplication();
+            Task<IList<ApplyPlannedLeave>> GetApplication();
 
 
         EmployeeClass GetEmployeeById(int EmpId);

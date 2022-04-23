@@ -21,5 +21,7 @@ namespace EmployeeLeaveMangApp.Models
         public int LeaveDuration { get; set; }
 
         public string LeaveReason { get; set; }
+
+        public string Action { get; set; }
     }
 }

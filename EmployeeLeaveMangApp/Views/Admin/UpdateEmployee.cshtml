@@ -23,7 +23,7 @@
                         <label asp-for="EmpName"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="EmpName" class="form-control"/>
+                        <input asp-for="EmpName" class="form-control" />
                         <span asp-validation-for="EmpName" class="text-danger"></span>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                         <label asp-for="LeaveId"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="LeaveId" class="form-control"  />
+                        <input asp-for="LeaveId" class="form-control" />
                         <span asp-validation-for="LeaveId" class="text-danger"></span>
                     </div>
                 </div>
@@ -71,6 +71,16 @@
                         <input type="submit" class="btn btn-info w-100" value="Approve" />
                     </div>
                 </div>
+
+                @if (ViewBag.Message != null)
+                {
+                    <a class="nav-link text-dark btn-primary font-weight-bold" style="position: relative; margin: 10px; background-color: #ff8d00;float: right" asp-controller="Admin" asp-action="GetAllEmployee">Get All Employee</a>
+                    <script type="text/javascript">
+                                                window.onload = function () {
+                                                alert("@ViewBag.Message");
+                                                };
+                    </script>
+                }
             </div>
         </div>
     </div>

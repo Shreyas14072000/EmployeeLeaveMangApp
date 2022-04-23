@@ -33,31 +33,30 @@ namespace EmployeeLeaveMangApp.Controllers
         {
             return View();
         }
-
-
-      
-        public ActionResult GetAllEmployee()
+        public async Task<IActionResult> GetAllEmployee()
         {
+            _logger.LogInformation("student endpoint starts");
+            var employee = await EmployeeService.GetAllEmployee();
             try
             {
-                var EmployeeClass = EmployeeService.GetAllEmployee();
-                if (EmployeeClass != null)
-                {
-                    return View(EmployeeClass);
-                }
+                if (employee == null) return NotFound();
+                _logger.LogInformation("student endpoint completed");
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                _logger.LogError("Exception Occured", e.InnerException);
+                _logger.LogError("exception occured;ExceptionDetail:" + ex.Message);
+                _logger.LogError("exception occured;ExceptionDetail:" + ex.InnerException);
+                _logger.LogError("exception occured;ExceptionDetail:" + ex);
+                return BadRequest();
             }
-
-            return BadRequest("Not found");
+            
+            return View(employee);
         }
-        public async  Task<IActionResult> AddEmployee()
+        public IActionResult AddEmployee() 
         {
-
             return View();
         }
+       
         #region "Add Employee"
         [HttpPost]
         public async Task<IActionResult> AddEmployee(EmployeeClass employeeClass)
@@ -65,21 +64,22 @@ namespace EmployeeLeaveMangApp.Controllers
             try
             {
                 EmployeeService.InsertEmployee(employeeClass);
+                
                 await _sendServiceBusMessage.sendServiceBusMessage(new ServiceBusMessageData
                 {
                     EmpId = employeeClass.EmpId,
                     EmpName = employeeClass.EmpName,
-                    EmpGender = employeeClass.EmpGender
+                    EmpGender = employeeClass.EmpGender,
+                    Action = "Added"
                 });
 
-
-                return Ok("Employee Added");
             }
             catch (Exception e)
             {
                 _logger.LogError("Exception Occured", e.InnerException);
             }
-            return BadRequest("Not found");
+            ViewBag.Message = string.Format("Employee Added Successfully");
+            return View();
 
         }
         #endregion
@@ -98,17 +98,19 @@ namespace EmployeeLeaveMangApp.Controllers
                     EmpId = employee.EmpId,
                     EmpName = employee.EmpName,
                     EmpGender = employee.EmpGender,
-                    LeaveStatus = employee.LeaveStatus
+                    LeaveStatus = employee.LeaveStatus,
+                    Action = "Approved for Leave"
 
                 });
 
-                return Ok("Leave Approved");
+               
             }
             catch (Exception e)
             {
                 _logger.LogError("Exception Occured", e.InnerException);
             }
-            return BadRequest("Not found");
+            ViewBag.Message = string.Format("Leave Approved Successfully");
+            return View();
 
         }
 

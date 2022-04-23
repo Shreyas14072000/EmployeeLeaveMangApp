@@ -22,7 +22,7 @@
                         <label asp-for="EmpName"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="EmpName" class="form-control"  />
+                        <input asp-for="EmpName" class="form-control" />
                         <span asp-validation-for="EmpName" class="text-danger"></span>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
                         <label asp-for="EmpGender"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="EmpGender" class="form-control"  />
+                        <input asp-for="EmpGender" class="form-control" />
                         <span asp-validation-for="EmpGender" class="text-danger"></span>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                         <label asp-for="LeaveStatus"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="LeaveStatus" class="form-control"  readonly/>
+                        <input asp-for="LeaveStatus" class="form-control" readonly />
                         <span asp-validation-for="LeaveStatus" class="text-danger"></span>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                         <label asp-for="LeaveId"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="LeaveId" class="form-control" readonly/>
+                        <input asp-for="LeaveId" class="form-control" readonly />
                         <span asp-validation-for="LeaveId" class="text-danger"></span>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                         <label asp-for="LeaveType"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="LeaveType" class="form-control" readonly/>
+                        <input asp-for="LeaveType" class="form-control" readonly />
                         <span asp-validation-for="LeaveType" class="text-danger"></span>
                     </div>
                 </div>
@@ -70,6 +70,15 @@
                         <input type="submit" class="btn btn-info w-100" value="AddEmployee" />
                     </div>
                 </div>
+                @if (ViewBag.Message != null)
+                {
+                    <a class="nav-link text-dark btn-primary font-weight-bold" style="position: relative; margin: 10px; background-color: #ff8d00;float: right" asp-controller="Admin" asp-action="GetAllEmployee">Get All Employee</a>
+                    <script type="text/javascript">
+                                                window.onload = function () {
+                                                alert("@ViewBag.Message");
+                                                };
+                    </script>
+                }
             </div>
         </div>
     </div>

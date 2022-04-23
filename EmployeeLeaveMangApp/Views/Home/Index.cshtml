@@ -9,8 +9,18 @@
 
 
     <div>
-        <h2><a class="nav-link text-dark btn-primary font-weight-bold" style="position: relative; margin: 10px; background-color: peachpuff; " asp-controller="Admin" asp-action="Admin">Admin</a></h2>
+        @*<h2><a class="nav-link text-dark btn-primary font-weight-bold" style="position: relative; margin: 10px; background-color: peachpuff; " asp-controller="Admin" asp-action="Admin">Admin</a></h2>
         <h2><a class="nav-link text-dark btn-primary font-weight-bold" style="position: relative; margin: 10px; background-color: peachpuff; " asp-controller="Employee" asp-action="Employee">Employee</a></h2>
+        <h2><a class="nav-link text-dark btn-primary font-weight-bold" style="position: relative; margin: 10px; background-color: peachpuff; " asp-controller="Upload" asp-action="UploadFile">Upload File</a></h2>*@
+
+        <button id="myAdminButton" class="float-lg-none submit-button w-50 " style="position: center; margin: 15px; background-color: peachpuff;">Admin</button>
+        <script type="text/javascript">document.getElementById("myAdminButton").onclick = function () {
+    location.href = "https://validatelogin-elms.azurewebsites.net/api/validatelogin?Users=Admin";
+            };</script>
+        <button id="myEmployeeButton" class="float-lg-none submit-button w-50 " style="position: center; margin: 15px; background-color: lightgreen">Employee</button>
+        <script type="text/javascript">document.getElementById("myEmployeeButton").onclick = function () {
+    location.href = "https://validatelogin-elms.azurewebsites.net/api/validatelogin?Users=Employee";
+            };</script>
 
     </div>
 

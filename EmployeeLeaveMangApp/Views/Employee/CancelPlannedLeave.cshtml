@@ -16,7 +16,7 @@
                         <span asp-validation-for="EmpId" class="text-danger"></span>
                     </div>
                 </div>
-                
+
 
 
 
@@ -26,6 +26,16 @@
                         <input type="submit" class="btn btn-info w-100" value="Delete" />
                     </div>
                 </div>
+                @if (ViewBag.Message != null)
+                {
+                    <a class="nav-link text-dark btn-primary font-weight-bold" style="position: relative; margin: 10px; background-color: #ff8d00;float: right" asp-controller="Employee" asp-action="GetApplication">Get Application</a>
+                    <script type="text/javascript">
+                                                window.onload = function () {
+                                                alert("@ViewBag.Message");
+                                                };
+                    </script>
+                }
+
             </div>
         </div>
     </div>

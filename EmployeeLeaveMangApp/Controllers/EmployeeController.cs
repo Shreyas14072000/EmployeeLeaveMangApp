@@ -32,64 +32,42 @@ namespace EmployeeLeaveMangApp.Controllers
 
 
 
-        ////#region "Search Employee Leave Taken"
-        ////public IActionResult GetEmployeeById()
-        ////{
-        ////    return View();
-        ////}
-        ////[HttpPost]
-        ////public IActionResult GetEmployeeById(int EmpId)
-        ////{
-        ////    try
-        ////    {
-        ////        var EmployeeClass = EmployeeService.GetEmployeeById(EmpId);
-        ////        if (EmployeeClass != null)
-        ////        {
-        ////            return Ok(EmployeeClass);
-        ////        }
-        ////    }
-        ////    catch (Exception e)
-        ////    {
-        ////        _logger.LogError("Exception Occured", e.InnerException);
-        ////    }
 
-        ////    return BadRequest("Not found");
-        ////}
-        //#endregion
 
-        
+
 
         #region "Update Employee Data"
-        
+
         #endregion
 
         #region "Search Employee List"
-        
+
 
         #endregion
 
         #region "Leave Type"
-       
-        public ActionResult GetAllLeaveType()
+        public async Task<IActionResult> GetAllLeaveType()
         {
+            _logger.LogInformation("student endpoint starts");
+            var Leave = await EmployeeService.GetAllLeaveType();
             try
             {
-                var LeaveDetail = EmployeeService.GetAllLeaveType();
-                if (LeaveDetail != null)
-                {
-                    return View(LeaveDetail);
-                }
+                if (Leave == null) return NotFound();
+                _logger.LogInformation("student endpoint completed");
             }
-
-            catch (Exception e)
+            catch (Exception ex)
             {
-                _logger.LogError("Exception Occured", e.InnerException);
+                _logger.LogError("exception occured;ExceptionDetail:" + ex.Message);
+                _logger.LogError("exception occured;ExceptionDetail:" + ex.InnerException);
+                _logger.LogError("exception occured;ExceptionDetail:" + ex);
+                return BadRequest();
             }
-            return BadRequest("Not found");
+            //return Ok(student);
+            return View(Leave);
         }
         #endregion
         #region "Apply Planned Leaves"
-        public async Task<IActionResult> ApplyPLeave()
+        public IActionResult ApplyPLeave()
         {
             return View();
         }
@@ -106,24 +84,23 @@ namespace EmployeeLeaveMangApp.Controllers
                     EmpId = applyPlannedLeave.EmpId,
                     EmpName = applyPlannedLeave.EmpName,
                     LeaveDuration = applyPlannedLeave.LeaveDuration,
-                    LeaveReason = applyPlannedLeave.LeaveReason
+                    LeaveReason = applyPlannedLeave.LeaveReason,
+                    Action = "Applied For Planned  Leave"
 
 
                 });
-
-                return Ok("Leave Applied Successully");
             }
             catch (Exception e)
             {
                 _logger.LogError("Exception Occured", e.InnerException);
             }
-            return BadRequest("Not found");
-
+            ViewBag.Message = string.Format("Applied for Leave successfully");
+            return View();
         }
         #endregion
 
         #region "Cancel Planned Leaves"
-        public async Task<IActionResult> CancelPlannedLeave()
+        public IActionResult CancelPlannedLeave()
         {
             return View();
         }
@@ -135,39 +112,43 @@ namespace EmployeeLeaveMangApp.Controllers
                 EmployeeService.DeletePLeave(EmpId);
                 await _sendServiceBusMessage.sendServiceBusMessage(new ServiceBusMessageData
                 {
-                    EmpId = EmpId
+                    EmpId = EmpId,
+                    Action = "Cancalled the Leave"
 
                 }) ;
 
-                return Ok("Leave Cancelled");
 
             }
             catch (Exception e)
             {
                 _logger.LogError("Exception Occured", e.InnerException);
             }
-            return BadRequest("Not found");
+            ViewBag.Message = string.Format("Leave Cancelled Successfully");
+            return View();
         }
         #endregion
-        public ActionResult GetApplication()
+        public async Task<IActionResult> GetApplication()
         {
+            _logger.LogInformation("student endpoint starts");
+            var Leave = await EmployeeService.GetApplication();
             try
             {
-                var LeaveApp = EmployeeService.GetApplication();
-                if (LeaveApp != null)
-                {
-                    return View(LeaveApp);
-                }
+                if (Leave == null) return NotFound();
+                _logger.LogInformation("student endpoint completed");
             }
-
-            catch (Exception e)
+            catch (Exception ex)
             {
-                _logger.LogError("Exception Occured", e.InnerException);
+                _logger.LogError("exception occured;ExceptionDetail:" + ex.Message);
+                _logger.LogError("exception occured;ExceptionDetail:" + ex.InnerException);
+                _logger.LogError("exception occured;ExceptionDetail:" + ex);
+                return BadRequest();
             }
-            return BadRequest("Not found");
+            //return Ok(student);
+            return View(Leave);
         }
+    }
 
     }
 
-}
+
 
